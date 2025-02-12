@@ -2,12 +2,12 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Res, UseGuards, } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { LoginDto } from './dto/loginDto';
 import { Response,Request } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { Roles } from 'src/guard/role';
 import { RolesGuard } from 'src/guard/role.guard';
+import { updateRoleDto } from './dto/update';
 
 @Controller('user')
 export class UserController {
@@ -42,16 +42,16 @@ export class UserController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+    return this.userService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
+  update(@Param('id') id: string, @Body() updateRolerto: updateRoleDto) {
+    return this.userService.updateRole(id, updateRolerto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
+    return this.userService.delete(id);
   }
 }

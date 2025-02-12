@@ -13,6 +13,7 @@ import * as argon2 from 'argon2';
 import { Request, response, Response } from 'express';
 import { argon2d } from 'argon2';
 import { LoginDto } from './dto/loginDto';
+import { updateRoleDto } from './dto/update';
 
 @Injectable()
 export class UserService {
@@ -90,16 +91,30 @@ export class UserService {
     return await this.userRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne (id: string) {
+    const find = await this.userRepository.findOne({where:{id:id}});
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+ async updateRole(id: string, updateUserDto: updateRoleDto) {
+  const find= await this.userRepository.findOne({where:{id:id}});
+if(!find) throw new HttpException('id does not exist', 400);
+const updateRole = await this.userRepository.update(id, updateUserDto)
+return {
+  statusCode:201,
+  message: `Role updated successfully`
+}
+
+  
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async delete(id: string) {
+    const find = await this.userRepository.findOne({where:{id:id}});
+    if(!find) throw new HttpException('user not found', 400)
+      await this.userRepository.delete(id);
+    return {
+      statusCode:200,
+      message: `${find.name} was deleted successfully`
+    }
   }
 
   async findEmail(email) {
