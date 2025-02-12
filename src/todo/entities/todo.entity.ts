@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "src/user/entities/user.entity";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 /* eslint-disable prettier/prettier */
 @Entity()
@@ -8,5 +9,12 @@ export class Todo {
     id: string;
 
     @Column()
-    description: string
+    description: string;
+
+    @Column()
+    userId: string;
+
+    @ManyToOne(() => User, (user) => user.todo)
+    user: User[]
+  title: any;
 }

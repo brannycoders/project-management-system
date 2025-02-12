@@ -2,6 +2,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Todo } from 'src/todo/entities/todo.entity';
 import { User } from 'src/user/entities/user.entity';
 
 @Module({
@@ -15,7 +16,8 @@ import { User } from 'src/user/entities/user.entity';
                 username: ConfigService.getOrThrow('DB_USER'),
                 password: ConfigService.getOrThrow('DB_PASSWORD'),
                 database: ConfigService.getOrThrow('DB_NAME'),
-                entities: [User],
+                autoLoadEntities: true,
+                entities: [User, Todo],
                 synchronize: true,
             }),
             inject: [ConfigService],

@@ -47,7 +47,8 @@ export class UserService {
 
   async signIn(payload: LoginDto, @Req() req: Request, @Req() res: Response) {
     const {email, password} = payload
-    const user = await this.userRepository.findOneBy({email})
+    //const user = await this.userRepository.findOneBy({email})
+    const user = await this.userRepository.createQueryBuilder("user").addSelect("user.password").where("user.email = :email", {email:payload.email}).getOne()
 
     if (!user) {
       throw new HttpException('No email found', 400)

@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { userRole } from "../enum/user.role.enum";
+import { Todo } from "src/todo/entities/todo.entity";
 
 /* eslint-disable prettier/prettier */
 @Entity()
@@ -24,4 +25,7 @@ export class User {
         default: userRole.user
     })
     role: userRole;
+
+    @OneToMany(() => Todo, (todo) => todo.user)
+    todo: Todo
 }
