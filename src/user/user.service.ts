@@ -109,11 +109,11 @@ return {
 
   async delete(id: string) {
     const find = await this.userRepository.findOne({where:{id:id}});
-    if(!find) throw new HttpException('user not found', 400)
+    if(!find) throw new HttpException('user  not found', 400)
       await this.userRepository.delete(id);
     return {
       statusCode:200,
-      message: `${find.name} was deleted successfully`
+      message: `${find.name} was deleted successfully and the operation is completed`
     }
   }
 
