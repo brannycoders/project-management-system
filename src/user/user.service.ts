@@ -93,15 +93,23 @@ export class UserService {
 
   async findOne (id: string) {
     const find = await this.userRepository.findOne({where:{id:id}});
+    if(!find) throw new HttpException('User with id noth found', 404);
+    return {
+      statusCode:200,
+      find
+
+    }
   }
 
  async updateRole(id: string, updateUserDto: updateRoleDto) {
   const find= await this.userRepository.findOne({where:{id:id}});
 if(!find) throw new HttpException('id does not exist', 400);
 const updateRole = await this.userRepository.update(id, updateUserDto)
+const find1= await this.userRepository.findOne({where:{id:id}});
 return {
   statusCode:201,
-  message: `Role updated successfully`
+  message: `Role updated successfully`,
+  find1
 }
 
   

@@ -41,16 +41,22 @@ export class UserController {
  
 
   @Get(':id')
+  @UseGuards(AuthGuard(),RolesGuard)
+  @Roles('admin')
   findOne(@Param('id') id: string) {
     return this.userService.findOne(id);
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard(),RolesGuard)
+  @Roles('admin')
   update(@Param('id') id: string, @Body() updateRolerto: updateRoleDto) {
     return this.userService.updateRole(id, updateRolerto);
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard(),RolesGuard)
+  @Roles('admin')
   remove(@Param('id') id: string) {
     return this.userService.delete(id);
   }
