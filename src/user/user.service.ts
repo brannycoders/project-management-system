@@ -93,7 +93,7 @@ export class UserService {
 
   async findOne (id: string) {
     const find = await this.userRepository.findOne({where:{id:id}});
-    if(!find) throw new HttpException('User with id noth found', 404);
+    if(!find) throw new HttpException('User with id not found', 404);
     return {
       statusCode:200,
       find
