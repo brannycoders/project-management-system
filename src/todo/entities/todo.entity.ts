@@ -8,13 +8,24 @@ export class Todo {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
+    @ManyToOne(() => User, (user) => user.todo)
+    user: User[]
+  title: string;
+
     @Column()
     description: string;
 
     @Column()
     userId: string;
 
-    @ManyToOne(() => User, (user) => user.todo)
-    user: User[]
-  title: any;
+   
 }
+
+
+
+// export class CreateTodoDto {
+//   title: string;
+//   description?: string;
+//   status?: boolean;
+// }
+

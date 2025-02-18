@@ -35,7 +35,7 @@ req:Request) {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() createTodoDto: CreateTodoDto) {
-    return this.todoService.update(id, createTodoDto);
+    return this.todoService.updated(id, createTodoDto);
   }
 
   @Delete(':id')
