@@ -54,9 +54,9 @@ export class TodoService {
   //   return `This action updates a #${id} todo`;
   // }
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateTodoDto: UpdateTodoDto) {
+  async update(@Param('id') id: string, @Body() createTodoDto: CreateTodoDto) {
     try {
-      const result = await this.todoService.update(+id, updateTodoDto);
+      const result = await this.todoService.update(+id, createTodoDto);
       return { success: true, message: 'Todo updated successfully', data: result };
     } catch (error) {
       throw new HttpException(error.message, error.status || HttpStatus.INTERNAL_SERVER_ERROR);
