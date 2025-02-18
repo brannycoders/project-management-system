@@ -50,10 +50,10 @@ export class TodoService {
 
 
   async updated(id: string, payload: CreateTodoDto) {
-    const find= await this.todoRepository.findOne({where:{id}});
+    const find= await this.todoRepository.findOne({where:{id:id}});
   if(!find) throw new HttpException('id does not exist', 400);
   const updateTodo = await this.todoRepository.update(id,payload)
-  const find1= await this.todoRepository.findOne({where:{id}});
+  const find1= await this.todoRepository.findOne({where:{id:id}});
   return {
     statusCode:200,
     message: `Role updated successfully`,
