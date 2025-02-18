@@ -54,7 +54,7 @@ export class TodoService {
   //   return `This action updates a #${id} todo`;
   // }
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() createTodoDto: CreateTodoDto) {
+  async updated(@Param('id') id: string, @Body() createTodoDto: CreateTodoDto) {
     try {
       const result = await this.todoService.update(+id, createTodoDto);
       return { success: true, message: 'Todo updated successfully', data: result };
