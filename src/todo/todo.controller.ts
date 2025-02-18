@@ -14,7 +14,6 @@ export class TodoController {
   constructor(private readonly todoService: TodoService) {}
 
   
-
   @Post()
   @UseGuards(AuthGuard(), RolesGuard)
   @Roles('user', 'admin')
@@ -36,7 +35,7 @@ req:Request) {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() createTodoDto: CreateTodoDto) {
-    return this.todoService.updated(id, createTodoDto);
+    return this.todoService.update(id, createTodoDto);
   }
 
   @Delete(':id')

@@ -3,7 +3,6 @@
 /* eslint-disable prettier/prettier */
 import { Body, Delete, HttpException, HttpStatus, Injectable, Param, Patch } from '@nestjs/common';
 import { CreateTodoDto } from './dto/create-todo.dto';
-import { UpdateTodoDto } from './dto/update-todo.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Todo } from './entities/todo.entity';
@@ -49,19 +48,24 @@ export class TodoService {
     return { success: true, message: 'Todo retrieved successfully', data: todo };
   }
 
+
+  async update(id: string, payload: CreateTodoDto) {
+    const find= await this.todoRepository.findOne({where:{id:id}});
+  if(!find) throw new HttpException('id does not exist', 400);
+  const updateRole = await this.todoRepository.update(id, payload)
+  const find1= await this.todoRepository.findOne({where:{id:id}});
+  return {
+    statusCode:201,
+    message: `Role updated successfully`,
+    find1
+  }
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   // update(id: number, updateTodoDto: UpdateTodoDto) {
   //   return `This action updates a #${id} todo`;
   // }
-  @Patch(':id')
-  async updated(id: string, createTodoDto: CreateTodoDto) {
-    try {
-      const result = await this.todoService.update(+id, createTodoDto);
-      return { success: true, message: 'Todo updated successfully', data: result };
-    } catch (error) {
-      throw new HttpException(error.message, error.status || HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-  }
+  
 
 
 //   remove(id: number) {

@@ -111,9 +111,7 @@ return {
   message: `Role updated successfully`,
   find1
 }
-
-  
-  }
+}
 
   async delete(id: string) {
     const find = await this.userRepository.findOne({where:{id:id}});
