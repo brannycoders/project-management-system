@@ -34,6 +34,8 @@ req:Request) {
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard(), RolesGuard)
+  @Roles('user', 'admin')
   update(@Param('id') id: string, @Body() createTodoDto: CreateTodoDto) {
     return this.todoService.updated(id, createTodoDto);
   }
