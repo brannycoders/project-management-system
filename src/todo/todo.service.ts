@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Todo } from './entities/todo.entity';
 import { User } from 'src/user/entities/user.entity';
+import { UpdateTodoDto } from './dto/update-todo.dto';
 
 @Injectable()
 export class TodoService {
@@ -49,29 +50,31 @@ export class TodoService {
   }
 
 
-  async updated(id: string, payload: CreateTodoDto) {
-    const find= await this.todoRepository.findOne({where:{id:id}});
-  if(!find) throw new HttpException('id does not exist', 400);
-  const updateTodo = await this.todoRepository.update(id,payload)
-  const find1= await this.todoRepository.findOne({where:{id:id}});
-  return {
-    statusCode:200,
-    message: `Role updated successfully`,
-    find1
-  }
-  }
+  
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // update(id: number, updateTodoDto: UpdateTodoDto) {
-  //   return `This action updates a #${id} todo`;
-  // }
+  async updated(id: string, updateTodoDto: UpdateTodoDto) {
+    // Find the existing todo
+    const find = await this.todoRepository.findOne({ where: { id } });
+  
+    if (!find) throw new HttpException('ID does not exist', 400);
+  
+    // Merge the updated data
+    Object.assign(find, updateTodoDto);
+  
+    // Save the updated entity
+    const updatedTodo = await this.todoRepository.save(find);
+  
+    return {
+      statusCode: 200,
+      message: 'Todo updated successfully',
+      updatedTodo,
+    };
+  }
   
 
 
-//   remove(id: number) {
-//     return `This action removes a #${id} todo`;
-//   }
-// }
+  
+  
 @Delete(':id')
   async remove(@Param('id') id: string) {
     try {

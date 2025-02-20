@@ -7,7 +7,8 @@ import { RolesGuard } from 'src/guard/role.guard';
 import { Request } from 'express';
 import { Roles } from 'src/guard/role';
 import { User } from 'src/user/entities/user.entity';
-import { CreateTodoDto } from './dto/create-todo.dto';
+import { userRole } from 'src/user/enum/user.role.enum';
+import { UpdateTodoDto } from './dto/update-todo.dto';
 
 @Controller('todo')
 export class TodoController {
@@ -35,8 +36,8 @@ req:Request) {
 
   @Patch(':id')
   @UseGuards(AuthGuard(), RolesGuard)
-  @Roles('user', 'admin')
-  update(@Param('id') id: string, @Body() createTodoDto: CreateTodoDto) {
+  @Roles(userRole.admin, userRole.user)
+  update(@Param('id') id: string, @Body() createTodoDto: UpdateTodoDto) {
     return this.todoService.updated(id, createTodoDto);
   }
 

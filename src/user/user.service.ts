@@ -71,7 +71,8 @@ export class UserService {
     //delete user.password
     return res.send({
       success: true,
-      userToken: token
+      userToken: token,
+      id:user.id
     })
   }
 

@@ -8,6 +8,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { Roles } from 'src/guard/role';
 import { RolesGuard } from 'src/guard/role.guard';
 import { updateRoleDto } from './dto/update';
+import { userRole } from './enum/user.role.enum';
 
 @Controller('user')
 export class UserController {
@@ -49,7 +50,7 @@ export class UserController {
 
   @Patch(':id')
   @UseGuards(AuthGuard(),RolesGuard)
-  @Roles('admin')
+  @Roles(userRole.admin)
   update(@Param('id') id: string, @Body() updateRolerto: updateRoleDto) {
     return this.userService.updateRole(id, updateRolerto);
   }
