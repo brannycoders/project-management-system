@@ -43,7 +43,7 @@ req:Request) {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.todoService.remove(id);
+    return this.todoService.delete(id);
   }
 }
 
